@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/srl_weather"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.a20256790.weatherdemo.view.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/content_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/clear_sky_day_start"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/first_show_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/rl_weather_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_update_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20.0dip"
+                        android:layout_marginTop="15.0dip"
+                        android:gravity="right"
+                        android:text="20:01 刷新"
+                        android:textColor="@color/home_text_color_dark"
+                        android:textSize="13.0sp" />
+
+                    <TextView
+                        android:id="@+id/tv_maintemp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_update_time"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="sans-serif-thin"
+                        android:gravity="center"
+                        android:textColor="@color/home_text_color"
+                        android:textSize="90.0sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tv_degree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/tv_maintemp"
+                        android:layout_toRightOf="@id/tv_maintemp"
+                        android:fontFamily="sans-serif-thin"
+                        android:text="°"
+                        android:textColor="@color/home_text_color"
+                        android:textSize="60.0sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tv_main_cloud_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_maintemp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5.0dip"
+                        android:textColor="@color/home_text_color_dark"
+                        android:textSize="14.0sp" />
+
+                    <TextView
+                        android:id="@+id/tv_aqi"
+                        style="@style/HomeCustomButtonStyle"
+                        android:layout_below="@id/tv_main_cloud_type"
+                        android:clickable="true" />
+
+                </RelativeLayout>
+                <com.example.a20256790.weatherdemo.widget.WeeklyWeatherView
+                    android:id="@+id/weekForecast"
+                    android:layout_below="@id/rl_weather_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <!-- 空气质量 -->
+            <include layout="@layout/widget_aqi" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="visible"
+                android:textColor="@color/home_text_color_dark"
+                android:text="@string/large_text"
+                />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.v4.widget.SwipeRefreshLayout>

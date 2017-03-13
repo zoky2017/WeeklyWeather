@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:theme="@style/AppTheme.NoActionBar"
+    >
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="?colorPrimary"
+        android:fitsSystemWindows="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:theme="@style/DarkToolbarTheme"
+        >
+        <TextView
+            android:textSize="18.0sp"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_title_choose_city"
+            android:layout_centerInParent="true" />
+        <!--<ImageView-->
+            <!--android:layout_gravity="center|right"-->
+            <!--android:id="@+id/iv_locate"-->
+            <!--android:background="?selectableItemBackgroundBorderless"-->
+            <!--android:clickable="true"-->
+            <!--android:layout_width="23.0dip"-->
+            <!--android:layout_height="23.0dip"-->
+            <!--android:layout_marginRight="15.0dip"-->
+            <!--android:src="@drawable/ic_locate_city"-->
+            <!--android:tint="?colorAccent"-->
+            <!--android:onClick="locateCity" />-->
+    </android.support.v7.widget.Toolbar>
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:theme="@style/Theme.Design.Light"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lv_location"
+            android:visibility="invisible"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="@null" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/ll_search"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <EditText android:gravity="center_horizontal"
+                android:id="@+id/et_search"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20.0dip"
+                android:hint="@string/activity_choose_city_et_hint_search"
+                android:maxLines="1" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginBottom="10.0dip">
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="15.0dip"
+                        android:layout_height="25.0dip"
+                        android:src="@drawable/ic_rectangle"
+                        android:tint="?colorAccent" />
+                    <TextView
+                        android:textSize="16.0sp"
+                        android:id="@+id/tv_listState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5.0dip"
+                        android:text="@string/activity_choose_city_hot_cities" />
+                </LinearLayout>
+                <TextView
+                    android:textSize="15.0sp"
+                    android:textColor="?colorAccent"
+                    android:id="@+id/tv_allCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10.0dip"
+                    android:text="@string/activity_choose_city_choose_by_province"
+                    android:visibility="gone"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_location_search"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:divider="@null" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
