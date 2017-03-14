@@ -39,6 +39,14 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity
         implements WeatherView, NavigationView.OnNavigationItemSelectedListener {
@@ -111,7 +119,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         presenter = new WeatherPresenterImpl(this);
         ButterKnife.bind(this);
         setSupportActionBar(tb_toolbar);
@@ -124,24 +131,51 @@ public class MainActivity extends AppCompatActivity
         animatorTempAlphaDown = ObjectAnimator.ofFloat(tvTemp, "alpha", ALPHA_HIGH, ALPHA_LOW).setDuration(DURASTION);
         animatoTemprAlphaUp = ObjectAnimator.ofFloat(tvTemp, "alpha", ALPHA_LOW, ALPHA_HIGH).setDuration(DURASTION);
 
-        sharedPreferences = getSharedPreferences("weatherArea", Context.MODE_PRIVATE);
-        cityName = sharedPreferences.getString("areaName", presenter.getLocationCity(manager));
-        presenter.refershWeatherData(cityName);
+
         Log.d(TAG, "cityName:" + cityName);
         initEvent();
+        loadInitData();
+    }
+
+    private void loadInitData() {
+
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                sharedPreferences = getSharedPreferences("weatherArea", Context.MODE_PRIVATE);
+                cityName = sharedPreferences.getString("areaName", presenter.getLocationCity(manager));
+                e.onNext(cityName);
+
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        presenter.refershWeatherData(cityName);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
     }
 
     private void initEvent() {
-        Intent intent = getIntent();
-        if (intent != null) {
 
-            Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                String area = bundle.getString("areaName");
-                presenter.refershWeatherData(area);
-            }
-
-        }
 
 
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -184,7 +218,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @NonNull
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -195,6 +229,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @NonNull
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

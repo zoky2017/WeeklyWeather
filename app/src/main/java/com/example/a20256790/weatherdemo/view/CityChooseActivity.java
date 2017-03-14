@@ -90,15 +90,11 @@ public class CityChooseActivity extends AppCompatActivity implements CityChoose 
                     Log.d("zoky", "post message:" + area);
                     EventBus.getDefault().post(area);
                     Intent intent = new Intent(CityChooseActivity.this, MainActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("areaName", area);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
                     SharedPreferences sp = getContext().getSharedPreferences("weatherArea", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("areaName", area);
                     editor.commit();
-
+                    startActivity(intent);
                     finish();
 
                 }
